@@ -1,0 +1,14 @@
+.bar {
+  position: sticky;
+  padding: 1rem;
+  top: 4rem;
+  background-color: rgb(255 255 255 / 0.3);
+
+  .text {
+    font-size: large;
+    font-weight: 600;
+    background-image: linear-gradient(blue, red);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}

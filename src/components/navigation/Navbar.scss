@@ -1,0 +1,18 @@
+#navbar {
+  ol {
+    color: gray;
+    font-weight: 400;
+    height: 100%;
+
+    li {
+      height: inherit;
+    }
+
+    a {
+      &.active {
+        color: white;
+        border-bottom: 2px solid white;
+      }
+    }
+  }
+}
