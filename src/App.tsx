@@ -3,6 +3,7 @@ import "./App.css";
 import { BASE_ROUTES, appRoutes } from "./routes/appRoutes";
 import { SearchEventPage } from "./pages/search-event";
 import { Navbar } from "./components/navigation/Navbar";
+import { CartSummaryPage } from "./pages/cart-summary";
 
 function App(): JSX.Element {
   return (
@@ -15,7 +16,7 @@ function App(): JSX.Element {
         />
         <Route path={appRoutes.searchEvents} element={<SearchEventPage />} />
         <Route path={appRoutes.searchLocation} element={<>Search Location</>} />
-        <Route path={appRoutes.cart} element={<>Cart Page</>} />
+        <Route path={appRoutes.cart} element={<CartSummaryPage />} />
         <Route path={appRoutes.event} element={<>event</>} />
         <Route path={appRoutes.location} element={<>location</>} />
       </Routes>
