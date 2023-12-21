@@ -1,3 +1,4 @@
+import { cleanedDate } from "@/components/cards/ImageCard/scripts/handleDate";
 import { SummaryCard } from "@/components/cards/SummaryCard";
 import { Content } from "@/components/layout";
 import { Button } from "@/components/ui/button";
@@ -12,27 +13,36 @@ import {
   PlusIcon,
   Trash2Icon,
 } from "lucide-react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 export function CartSummaryPage(): JSX.Element {
   const { toast } = useToast();
 
   const { cartContent, removeCartItem } = useContext(CartContext);
+  const [ticketCountArray, setticketCountArray] = useState<string[]>(
+    new Array(cartContent.length).fill("1"),
+  );
 
-  const summary = cartContent.map((event) => (
+  const summary = cartContent.map((event, index) => (
     <SummaryCard>
-      <SummaryCard.Image imageUrl={event.flyerFront ?? undefined} />
+      <SummaryCard.Image imageUrl={undefined} />
       <SummaryCard.Body
         title={event.title}
         description={
           <>
             <span className="flex items-center gap-2 text-slate-500">
               <CalendarIcon className="h-4" />
-              <p>Date</p>
+              <p>{cleanedDate(event.startTime, event.endTime)}</p>
             </span>
             <span className="flex items-center gap-2 text-slate-500">
               <MapPinIcon className="h-4" />
-              <p>Location</p>
+              <a
+                className="text-purple-600 underline"
+                href={event.venue.direction}
+                target="_blank"
+              >
+                {event.venue.name}
+              </a>
             </span>
           </>
         }
@@ -54,6 +64,12 @@ export function CartSummaryPage(): JSX.Element {
                 variant={"secondary"}
                 size={"icon"}
                 className="h-[2rem] rounded-r-none"
+                onClick={() => {
+                  changeValue(
+                    (Number(ticketCountArray[index]) - 1).toString(),
+                    index,
+                  );
+                }}
               >
                 <MinusIcon className="h-5" />
               </Button>
@@ -61,11 +77,22 @@ export function CartSummaryPage(): JSX.Element {
                 className="z-10 h-[2rem] w-12 rounded-none text-center [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                 type="number"
                 maxLength={3}
+                min={1}
+                value={ticketCountArray[index]}
+                onChange={(e) => {
+                  changeValue(e.target.value, index);
+                }}
               ></Input>
               <Button
                 variant={"secondary"}
                 size={"icon"}
                 className="h-[2rem] rounded-l-none"
+                onClick={() => {
+                  changeValue(
+                    (Number(ticketCountArray[index]) + 1).toString(),
+                    index,
+                  );
+                }}
               >
                 <PlusIcon />
               </Button>
@@ -85,6 +112,21 @@ export function CartSummaryPage(): JSX.Element {
     });
   };
 
+  const changeValue = (value: string, index: number) => {
+    let newValue = value;
+    if (value === "") newValue = "1";
+    if (value === "0") newValue = "1";
+
+    const charsToRemove = "\\+\\-";
+    newValue = newValue.replace(new RegExp(`[${charsToRemove}]`, "g"), "");
+
+    setticketCountArray((prev) => {
+      const newArray = [...prev];
+      newArray[index] = newValue;
+      return newArray;
+    });
+  };
+
   return (
     <>
       <Content>
@@ -95,8 +137,8 @@ export function CartSummaryPage(): JSX.Element {
               Your order is currently empty
             </div>
           ) : null}
-          <div className="">{summary}</div>
-          <hr className="my-8 h-1 rounded border-none bg-slate-200" />
+          <div className="divide-y">{summary}</div>
+          <hr className="my-6 h-1 rounded border-none bg-slate-200" />
           <div className="flex w-full justify-end">
             <div className="flex flex-col items-end gap-1">
               <p className="font-medium text-slate-600">Subtotal</p>
