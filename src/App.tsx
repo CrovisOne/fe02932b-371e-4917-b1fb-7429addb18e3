@@ -4,6 +4,7 @@ import { BASE_ROUTES, appRoutes } from "./routes/appRoutes";
 import { SearchEventPage } from "./pages/search-event";
 import { Navbar } from "./components/navigation/Navbar";
 import { CartSummaryPage } from "./pages/cart-summary";
+import { Toaster } from "./components/ui/toaster";
 
 function App(): JSX.Element {
   return (
@@ -20,6 +21,7 @@ function App(): JSX.Element {
         <Route path={appRoutes.event} element={<>event</>} />
         <Route path={appRoutes.location} element={<>location</>} />
       </Routes>
+      <Toaster />
     </>
   );
 }
