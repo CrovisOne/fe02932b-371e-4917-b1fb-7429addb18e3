@@ -22,8 +22,11 @@ import { observeCards } from "./scripts/dateObserver";
 import { filterEvents, sortEvents } from "./scripts/eventHandler";
 import { debounce } from "@/utils/debouncer";
 import { getDateRange } from "./scripts/eventDateRange";
+import { useToast } from "@/components/ui/use-toast";
 
 export function SearchEventPage(): JSX.Element {
+  const { toast } = useToast();
+
   const { events, setEvents } = useContext(EventListContext);
   const { addCartItem, cartContent } = useContext(CartContext);
 
@@ -39,19 +42,19 @@ export function SearchEventPage(): JSX.Element {
     .map((item, index) => (
       <div ref={(ref) => (cardRefs.current[index] = ref)} data-date={item.date}>
         <ImageCard id={item._id}>
-          <ImageCard.Image imageUrl={undefined} />
+          <ImageCard.Image imageUrl={item.flyerFront ?? undefined} />
           <ImageCard.Body
             title={item.title}
             locationUrl={item.venue.direction}
             locationName={item.venue.name}
-            startTime={item.startTime}
+            startTime={item.startTime ?? item.date}
             endTime={item.endTime}
           />
           <ImageCard.Footer align="right">
             <Button
               size={"icon"}
               onClick={() => {
-                addCartItem(item);
+                addToCart(item);
               }}
             >
               <PlusIcon className="h-5" />
@@ -60,6 +63,15 @@ export function SearchEventPage(): JSX.Element {
         </ImageCard>
       </div>
     ));
+
+  const addToCart = (event: EventProps): void => {
+    addCartItem(event);
+    toast({
+      variant: "success",
+      title: "You Added an Event to your Cart",
+      description: event.title,
+    });
+  };
 
   const search = debounce((e: ChangeEvent<HTMLInputElement>) => {
     const newEvents = filterEvents(events, e.target.value);

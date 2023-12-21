@@ -9,7 +9,7 @@ interface SummaryCardProps {
 const ForwardedSummaryCard = forwardRef<HTMLDivElement, SummaryCardProps>(
   ({ children }, ref) => {
     return (
-      <div ref={ref} className="flex h-32 bg-white py-4 shadow-sm">
+      <div ref={ref} className="flex h-32 bg-white p-4">
         {children}
       </div>
     );

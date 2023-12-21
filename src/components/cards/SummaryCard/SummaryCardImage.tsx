@@ -1,10 +1,16 @@
 import PlaceholderImage from "@/assets/pexels-pixabay-36717.jpg";
 
-export function SummaryCardImage(): JSX.Element {
+interface SummaryCardImageProps {
+  imageUrl?: string;
+}
+
+export function SummaryCardImage({
+  imageUrl,
+}: SummaryCardImageProps): JSX.Element {
   return (
     <img
-      className="ml-4 aspect-square rounded-sm object-cover"
-      src={PlaceholderImage}
+      className="aspect-square rounded-sm object-cover"
+      src={imageUrl ?? PlaceholderImage}
     ></img>
   );
 }

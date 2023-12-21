@@ -28,15 +28,20 @@ export function Navbar(): JSX.Element {
             </li>
           </ol>
         </div>
-        <div className="text-white">{cartContent.length}</div>
         <Button
-          variant="ghost"
+          variant="ghostDark"
           size="icon"
           onClick={() => {
             navigate(appRoutes.cart);
           }}
+          className="relative"
         >
           <ShoppingBasketIcon className="text-white" />
+          {cartContent.length ? (
+            <div className="absolute right-0 top-0 flex items-center rounded-full bg-primary px-1.5 text-xs font-medium text-white">
+              {cartContent.length}
+            </div>
+          ) : null}
         </Button>
       </div>
     </nav>

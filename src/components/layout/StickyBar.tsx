@@ -7,7 +7,7 @@ interface StickyBarProps {
 
 export function StickyBar({ children }: StickyBarProps): JSX.Element {
   return (
-    <div className="bar top-16 p-4 backdrop-blur-xl">
+    <div className="bar top-16 bg-white/60 px-4 py-2 backdrop-blur-xl">
       <p className="text">{children}</p>
     </div>
   );

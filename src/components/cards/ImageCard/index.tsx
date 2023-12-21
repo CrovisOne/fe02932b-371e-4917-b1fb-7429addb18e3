@@ -14,7 +14,7 @@ export interface ImageCardProps {
 export function ImageCard({ id, children }: ImageCardProps): JSX.Element {
   return (
     <ImageCardContext.Provider value={{ id }}>
-      <div className="flex h-[32rem] max-w-lg flex-col rounded-lg bg-white shadow-md">
+      <div className="flex min-h-[28rem] max-w-lg flex-col rounded-lg bg-white shadow-md">
         {children}
       </div>
     </ImageCardContext.Provider>
