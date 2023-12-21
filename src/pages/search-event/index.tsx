@@ -25,37 +25,41 @@ import { getDateRange } from "./scripts/eventDateRange";
 
 export function SearchEventPage(): JSX.Element {
   const { events, setEvents } = useContext(EventListContext);
-  const { addCartItem } = useContext(CartContext);
+  const { addCartItem, cartContent } = useContext(CartContext);
 
   const [currentDate, setCurrentDate] = useState<string | null>(null);
   const [filteredEvents, setFilteredEvents] = useState<EventProps[]>([]);
 
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  const cards = sortEvents(filteredEvents).map((item, index) => (
-    <div ref={(ref) => (cardRefs.current[index] = ref)} data-date={item.date}>
-      <ImageCard id={item._id}>
-        <ImageCard.Image imageUrl={undefined} />
-        <ImageCard.Body
-          title={item.title}
-          locationUrl={item.venue.direction}
-          locationName={item.venue.name}
-          startTime={item.startTime}
-          endTime={item.endTime}
-        />
-        <ImageCard.Footer align="right">
-          <Button
-            size={"icon"}
-            onClick={() => {
-              addCartItem(item);
-            }}
-          >
-            <PlusIcon className="h-5" />
-          </Button>
-        </ImageCard.Footer>
-      </ImageCard>
-    </div>
-  ));
+  const cards = sortEvents(filteredEvents)
+    .filter(
+      (item) => !cartContent.some((cartItem) => cartItem._id === item._id),
+    )
+    .map((item, index) => (
+      <div ref={(ref) => (cardRefs.current[index] = ref)} data-date={item.date}>
+        <ImageCard id={item._id}>
+          <ImageCard.Image imageUrl={undefined} />
+          <ImageCard.Body
+            title={item.title}
+            locationUrl={item.venue.direction}
+            locationName={item.venue.name}
+            startTime={item.startTime}
+            endTime={item.endTime}
+          />
+          <ImageCard.Footer align="right">
+            <Button
+              size={"icon"}
+              onClick={() => {
+                addCartItem(item);
+              }}
+            >
+              <PlusIcon className="h-5" />
+            </Button>
+          </ImageCard.Footer>
+        </ImageCard>
+      </div>
+    ));
 
   const search = debounce((e: ChangeEvent<HTMLInputElement>) => {
     const newEvents = filterEvents(events, e.target.value);
@@ -80,7 +84,7 @@ export function SearchEventPage(): JSX.Element {
       <Content>
         <main className="flex flex-col gap-4 pt-4">
           <h3 className="my-4">Public Events</h3>
-          <div className="mb-4 flex justify-between">
+          <div className="flex justify-between">
             <div className="flex gap-4">
               <Badge variant={"outline"} className="flex gap-2 px-2">
                 <img
