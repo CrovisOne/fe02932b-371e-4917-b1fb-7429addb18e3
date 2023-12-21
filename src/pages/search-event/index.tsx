@@ -18,88 +18,53 @@ import { EventListContext } from "@/provider/EventListProvider";
 import { CartContext } from "@/provider/CartProvider";
 import { EventProps } from "@/types/events";
 import { trimTimeFromDate } from "@/utils/dateHandler";
+import { observeCards } from "./scripts/dateObserver";
+import { filterEvents, sortEvents } from "./scripts/eventHandler";
+import { debounce } from "@/utils/debouncer";
 
 export function SearchEventPage(): JSX.Element {
   const { events, setEvents } = useContext(EventListContext);
   const { addCartItem } = useContext(CartContext);
 
   const [currentDate, setCurrentDate] = useState<string | null>(null);
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-
   const [filteredEvents, setFilteredEvents] = useState<EventProps[]>([]);
 
-  const cards = filteredEvents
-    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-    .map((item, index) => (
-      <div ref={(ref) => (cardRefs.current[index] = ref)} data-date={item.date}>
-        <ImageCard id={item._id}>
-          <ImageCard.Image imageUrl={undefined} />
-          <ImageCard.Body
-            title={item.title}
-            locationUrl={item.venue.direction}
-            locationName={item.venue.name}
-            startTime={item.startTime}
-            endTime={item.endTime}
-          />
-          <ImageCard.Footer align="right">
-            <Button
-              size={"icon"}
-              onClick={() => {
-                addCartItem(item);
-              }}
-            >
-              <PlusIcon className="h-5" />
-            </Button>
-          </ImageCard.Footer>
-        </ImageCard>
-      </div>
-    ));
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  const search = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length === 0) {
-      setFilteredEvents(events);
-    }
+  const cards = sortEvents(filteredEvents).map((item, index) => (
+    <div ref={(ref) => (cardRefs.current[index] = ref)} data-date={item.date}>
+      <ImageCard id={item._id}>
+        <ImageCard.Image imageUrl={undefined} />
+        <ImageCard.Body
+          title={item.title}
+          locationUrl={item.venue.direction}
+          locationName={item.venue.name}
+          startTime={item.startTime}
+          endTime={item.endTime}
+        />
+        <ImageCard.Footer align="right">
+          <Button
+            size={"icon"}
+            onClick={() => {
+              addCartItem(item);
+            }}
+          >
+            <PlusIcon className="h-5" />
+          </Button>
+        </ImageCard.Footer>
+      </ImageCard>
+    </div>
+  ));
 
-    const newEventList = events.filter((event) =>
-      event.title.toLowerCase().includes(e.target.value.toLowerCase()),
-    );
-    setFilteredEvents(newEventList);
-  };
+  const search = debounce((e: ChangeEvent<HTMLInputElement>) => {
+    const newEvents = filterEvents(events, e.target.value);
+    setFilteredEvents(newEvents);
+    console.log("search");
+  }, 400);
 
   useEffect(() => {
-    let visibleEntries: IntersectionObserverEntry[] = [];
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            visibleEntries.push(entry);
-          } else {
-            visibleEntries = visibleEntries.filter(
-              (e) => e.target !== entry.target,
-            );
-          }
-
-          if (visibleEntries.length > 0) {
-            const earliestEntry = visibleEntries.reduce((earliest, current) => {
-              return new Date(earliest.target.getAttribute("data-date") || "") <
-                new Date(current.target.getAttribute("data-date") || "")
-                ? earliest
-                : current;
-            });
-
-            setCurrentDate(earliestEntry.target.getAttribute("data-date"));
-          }
-        });
-      },
-      { threshold: 0.1 },
-    );
-
-    cardRefs.current.forEach((ref) => ref && observer.observe(ref));
-
-    return () => {
-      cardRefs.current.forEach((ref) => ref && observer.unobserve(ref));
-    };
+    const cleanup = observeCards(cardRefs.current, setCurrentDate);
+    return cleanup;
   });
 
   useLayoutEffect(() => {
@@ -124,9 +89,9 @@ export function SearchEventPage(): JSX.Element {
               <Input type="search" placeholder="Search..." onChange={search} />
             </div>
           </div>
+          <StickyBar>{trimTimeFromDate(currentDate ?? "")}</StickyBar>
+          <Grid>{cards}</Grid>
         </main>
-        <StickyBar>{trimTimeFromDate(currentDate ?? "")}</StickyBar>
-        <Grid>{cards}</Grid>
       </Content>
     </>
   );
