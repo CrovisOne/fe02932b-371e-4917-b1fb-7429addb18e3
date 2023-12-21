@@ -23,6 +23,7 @@ import { filterEvents, sortEvents } from "./scripts/eventHandler";
 import { debounce } from "@/utils/debouncer";
 import { getDateRange } from "./scripts/eventDateRange";
 import { useToast } from "@/components/ui/use-toast";
+import { FloatingScrollButton } from "@/components/floating/FloatingScrollButton";
 
 export function SearchEventPage(): JSX.Element {
   const { toast } = useToast();
@@ -42,7 +43,7 @@ export function SearchEventPage(): JSX.Element {
     .map((item, index) => (
       <div ref={(ref) => (cardRefs.current[index] = ref)} data-date={item.date}>
         <ImageCard id={item._id}>
-          <ImageCard.Image imageUrl={item.flyerFront ?? undefined} />
+          <ImageCard.Image imageUrl={undefined} />
           <ImageCard.Body
             title={item.title}
             locationUrl={item.venue.direction}
@@ -120,6 +121,7 @@ export function SearchEventPage(): JSX.Element {
           <Grid>{cards}</Grid>
         </main>
       </Content>
+      <FloatingScrollButton />
     </>
   );
 }
