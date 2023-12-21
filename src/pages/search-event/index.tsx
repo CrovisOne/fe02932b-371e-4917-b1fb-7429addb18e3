@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PlusIcon, SearchIcon } from "lucide-react";
-
+import UkFlag from "@/assets/united-kingdom.png";
 import DummyData from "../../assets/dummy.json";
 import { Content, Grid, StickyBar } from "@/components/layout";
 import {
@@ -21,6 +21,7 @@ import { trimTimeFromDate } from "@/utils/dateHandler";
 import { observeCards } from "./scripts/dateObserver";
 import { filterEvents, sortEvents } from "./scripts/eventHandler";
 import { debounce } from "@/utils/debouncer";
+import { getDateRange } from "./scripts/eventDateRange";
 
 export function SearchEventPage(): JSX.Element {
   const { events, setEvents } = useContext(EventListContext);
@@ -62,6 +63,8 @@ export function SearchEventPage(): JSX.Element {
     console.log("search");
   }, 400);
 
+  const dateRange = getDateRange(events);
+
   useEffect(() => {
     const cleanup = observeCards(cardRefs.current, setCurrentDate);
     return cleanup;
@@ -79,8 +82,16 @@ export function SearchEventPage(): JSX.Element {
           <h3 className="my-4">Public Events</h3>
           <div className="mb-4 flex justify-between">
             <div className="flex gap-4">
-              <Badge variant={"outline"}>Country</Badge>
-              <Badge variant={"outline"}>Date</Badge>
+              <Badge variant={"outline"} className="flex gap-2 px-2">
+                <img
+                  src={UkFlag}
+                  className="aspect-square h-6 w-6 overflow-hidden rounded-full"
+                />
+                LONDON
+              </Badge>
+              <Badge
+                variant={"outline"}
+              >{`${dateRange.earliest} - ${dateRange.latest}`}</Badge>
             </div>
             <div className="itmes-center flex max-w-lg gap-2">
               <Button variant={"ghost"} size={"icon"}>
