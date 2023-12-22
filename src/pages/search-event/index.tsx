@@ -2,7 +2,7 @@ import { ImageCard } from "@/components/cards/ImageCard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { PlusIcon, SearchIcon } from "lucide-react";
+import { InfoIcon, PlusIcon, SearchIcon } from "lucide-react";
 import UkFlag from "@/assets/united-kingdom.png";
 import DummyData from "../../assets/dummy.json";
 import { Content, Grid, StickyBar } from "@/components/layout";
@@ -24,6 +24,7 @@ import { debounce } from "@/utils/debouncer";
 import { getDateRange } from "./scripts/eventDateRange";
 import { useToast } from "@/components/ui/use-toast";
 import { FloatingScrollButton } from "@/components/floating/FloatingScrollButton";
+import { NotePlaceholder } from "@/components/placeholder/NotePlaceholder";
 
 export function SearchEventPage(): JSX.Element {
   const { toast } = useToast();
@@ -35,6 +36,7 @@ export function SearchEventPage(): JSX.Element {
   const [filteredEvents, setFilteredEvents] = useState<EventProps[]>([]);
 
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const searchRef = useRef<HTMLInputElement>(null);
 
   const cards = sortEvents(filteredEvents)
     .filter(
@@ -77,8 +79,14 @@ export function SearchEventPage(): JSX.Element {
   const search = debounce((e: ChangeEvent<HTMLInputElement>) => {
     const newEvents = filterEvents(events, e.target.value);
     setFilteredEvents(newEvents);
-    console.log("search");
   }, 400);
+
+  const handleSearchClick = () => {
+    if (searchRef.current) {
+      const newEvents = filterEvents(events, searchRef.current.value);
+      setFilteredEvents(newEvents);
+    }
+  };
 
   const dateRange = getDateRange(events);
 
@@ -111,14 +119,34 @@ export function SearchEventPage(): JSX.Element {
               >{`${dateRange.earliest} - ${dateRange.latest}`}</Badge>
             </div>
             <div className="itmes-center flex max-w-lg gap-2">
-              <Button variant={"ghost"} size={"icon"}>
+              <Button
+                variant={"ghost"}
+                size={"icon"}
+                onClick={handleSearchClick}
+              >
                 <SearchIcon />
               </Button>
-              <Input type="search" placeholder="Search..." onChange={search} />
+              <Input
+                ref={searchRef}
+                type="search"
+                placeholder="Search..."
+                onChange={search}
+              />
             </div>
           </div>
-          <StickyBar>{trimTimeFromDate(currentDate ?? "")}</StickyBar>
-          <Grid>{cards}</Grid>
+          <StickyBar>
+            {filteredEvents.length !== 0
+              ? trimTimeFromDate(currentDate ?? "")
+              : ""}
+          </StickyBar>
+          {filteredEvents.length !== 0 ? (
+            <Grid>{cards}</Grid>
+          ) : (
+            <NotePlaceholder>
+              <InfoIcon />
+              No Results found
+            </NotePlaceholder>
+          )}
         </main>
       </Content>
       <FloatingScrollButton />

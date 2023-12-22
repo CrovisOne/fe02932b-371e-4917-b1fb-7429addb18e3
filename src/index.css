@@ -38,6 +38,15 @@
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
+
+    --slate-200: 214 32% 91%;
+    --slate-400: 215 20% 65%;
+    --slate-600: 215 19% 35%;
+    --slate-800: 217 33% 17%;
+
+    --neutral: var(--slate-200);
+    --neutral-border: var(--slate-400);
+    --neutral-text: var(--slate-600);
   }
 
   .dark {
