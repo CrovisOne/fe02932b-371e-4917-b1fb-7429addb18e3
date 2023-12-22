@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { InfoIcon, PlusIcon, SearchIcon } from "lucide-react";
 import UkFlag from "@/assets/united-kingdom.png";
 import DummyData from "../../assets/dummy.json";
-import { Content, Grid, StickyBar } from "@/components/layout";
+import { Content, Grid, LazyLoader, StickyBar } from "@/components/layout";
 import {
   ChangeEvent,
   useContext,
@@ -38,34 +38,30 @@ export function SearchEventPage(): JSX.Element {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const searchRef = useRef<HTMLInputElement>(null);
 
-  const cards = sortEvents(filteredEvents)
-    .filter(
-      (item) => !cartContent.some((cartItem) => cartItem._id === item._id),
-    )
-    .map((item, index) => (
-      <div ref={(ref) => (cardRefs.current[index] = ref)} data-date={item.date}>
-        <ImageCard id={item._id}>
-          <ImageCard.Image imageUrl={undefined} />
-          <ImageCard.Body
-            title={item.title}
-            locationUrl={item.venue.direction}
-            locationName={item.venue.name}
-            startTime={item.startTime ?? item.date}
-            endTime={item.endTime}
-          />
-          <ImageCard.Footer align="right">
-            <Button
-              size={"icon"}
-              onClick={() => {
-                addToCart(item);
-              }}
-            >
-              <PlusIcon className="h-5" />
-            </Button>
-          </ImageCard.Footer>
-        </ImageCard>
-      </div>
-    ));
+  const renderCard = (item: EventProps, index: number) => (
+    <div ref={(ref) => (cardRefs.current[index] = ref)} data-date={item.date}>
+      <ImageCard id={item._id}>
+        <ImageCard.Image imageUrl={undefined} />
+        <ImageCard.Body
+          title={item.title}
+          locationUrl={item.venue.direction}
+          locationName={item.venue.name}
+          startTime={item.startTime ?? item.date}
+          endTime={item.endTime}
+        />
+        <ImageCard.Footer align="right">
+          <Button
+            size={"icon"}
+            onClick={() => {
+              addToCart(item);
+            }}
+          >
+            <PlusIcon className="h-5" />
+          </Button>
+        </ImageCard.Footer>
+      </ImageCard>
+    </div>
+  );
 
   const addToCart = (event: EventProps): void => {
     addCartItem(event);
@@ -140,7 +136,17 @@ export function SearchEventPage(): JSX.Element {
               : ""}
           </StickyBar>
           {filteredEvents.length !== 0 ? (
-            <Grid>{cards}</Grid>
+            <Grid>
+              <LazyLoader
+                items={sortEvents(filteredEvents).filter(
+                  (item) =>
+                    !cartContent.some((cartItem) => cartItem._id === item._id),
+                )}
+                renderRow={renderCard}
+                initialCount={10}
+                increment={10}
+              />
+            </Grid>
           ) : (
             <NotePlaceholder>
               <InfoIcon />
