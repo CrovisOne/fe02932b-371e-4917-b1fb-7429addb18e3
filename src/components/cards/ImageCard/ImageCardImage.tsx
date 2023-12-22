@@ -11,7 +11,7 @@ export function ImageCardImage({ imageUrl }: ImageProps): JSX.Element {
   return (
     <img
       id={`image-card-image-${id}`}
-      className="aspect-video rounded-t-lg object-cover object-top"
+      className="image-card-image"
       src={imageUrl ?? PlaceholderImage}
     ></img>
   );

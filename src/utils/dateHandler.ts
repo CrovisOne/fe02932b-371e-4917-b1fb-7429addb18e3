@@ -11,3 +11,12 @@ export function trimTimeFromDate(date: string): string {
 
   return dateOnly;
 }
+
+export function getTime(date: string): string {
+  const newDate = new Date(date);
+
+  return newDate.toLocaleTimeString("en-UK", {
+    hour: "numeric",
+    minute: "numeric",
+  });
+}

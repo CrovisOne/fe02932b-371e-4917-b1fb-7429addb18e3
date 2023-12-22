@@ -15,7 +15,7 @@ export function ImageCardFooter({
   return (
     <div
       id={`image-card-footer-${id}`}
-      className={`mx-4 mb-4 flex align-${align}`}
+      className={`image-card-footer align-${align}`}
     >
       {children}
     </div>

@@ -118,7 +118,7 @@ export function SearchEventPage(): JSX.Element {
                 variant={"outline"}
               >{`${dateRange.earliest} - ${dateRange.latest}`}</Badge>
             </div>
-            <div className="itmes-center flex max-w-lg gap-2">
+            <div className="flex max-w-lg items-center gap-2">
               <Button
                 variant={"ghost"}
                 size={"icon"}
