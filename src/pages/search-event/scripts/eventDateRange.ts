@@ -1,7 +1,7 @@
 import { EventProps } from "@/types/events";
 import { trimTimeFromDate } from "@/utils/dateHandler";
 
-type DateRangeReturnType = {
+export type DateRangeReturnType = {
   earliest: string;
   latest: string;
 };
