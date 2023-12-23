@@ -1,4 +1,4 @@
-import { StickyBar } from "@/components/layout";
+import { Content, StickyBar } from "@/components/layout";
 import { trimTimeFromDate } from "@/utils/dateHandler";
 
 interface StickyBarMoleculeProps {
@@ -11,8 +11,10 @@ export function StickyBarMolecule({
   currentDate,
 }: StickyBarMoleculeProps): JSX.Element {
   return (
-    <StickyBar>
-      {eventCount !== 0 ? trimTimeFromDate(currentDate) : null}
+    <StickyBar className="sticky">
+      <Content>
+        <div>{eventCount !== 0 ? trimTimeFromDate(currentDate) : null}</div>
+      </Content>
     </StickyBar>
   );
 }

@@ -28,9 +28,10 @@ import {
   StickyBarMolecule,
 } from "./molecules";
 
+import "./search-events.scss";
+
 export function SearchEventPage(): JSX.Element {
   const { toast } = useToast();
-
   const {
     callAxios: fetchEvents,
     data: eventData,
@@ -81,6 +82,7 @@ export function SearchEventPage(): JSX.Element {
 
   const dateRange = getDateRange(events);
 
+  // Add current visible date observer
   useEffect(() => {
     const observeElements = cardRefs
       .map((ref) => ref?.current)
@@ -90,6 +92,7 @@ export function SearchEventPage(): JSX.Element {
     return cleanup;
   });
 
+  // Add eventDate to context API
   useEffect(() => {
     setEvents(DummyData);
     setFilteredEvents(DummyData);
@@ -98,10 +101,12 @@ export function SearchEventPage(): JSX.Element {
     setFilteredEvents(eventData);
   }, [eventData]);
 
+  // Refresh eventCardsRef for date observer
   useEffect(() => {
     setCardRefs(events.map(() => createRef<HTMLDivElement>()));
   }, [events]);
 
+  // Fetch data
   // useLayoutEffect(() => {
   //   if (fetchedData.current) return;
   //   fetchEvents();
@@ -110,21 +115,25 @@ export function SearchEventPage(): JSX.Element {
 
   return (
     <>
-      <Content>
-        <main className="flex flex-col gap-4 pt-4">
-          <h3 className="my-4">Public Events</h3>
-          <div className="flex justify-between">
-            <BadgeMolecule dateRange={dateRange} />
-            <SearchMolecule
-              handleSearchClick={handleSearchClick}
-              search={search}
-              ref={searchRef}
-            />
+      <main className="search-event-main-content">
+        <Content navSpace>
+          <div className="header">
+            <h3>Public Events</h3>
+            <div className="tools flex-col sm:flex-row">
+              <BadgeMolecule dateRange={dateRange} />
+              <SearchMolecule
+                handleSearchClick={handleSearchClick}
+                search={search}
+                ref={searchRef}
+              />
+            </div>
           </div>
-          <StickyBarMolecule
-            eventCount={filteredEvents.length}
-            currentDate={currentDate ?? ""}
-          />
+        </Content>
+        <StickyBarMolecule
+          eventCount={filteredEvents.length}
+          currentDate={currentDate ?? ""}
+        />
+        <Content>
           <ContentMolecule
             addToCart={addToCart}
             events={sortedEvents}
@@ -132,8 +141,8 @@ export function SearchEventPage(): JSX.Element {
             loading={loading}
             error={error}
           />
-        </main>
-      </Content>
+        </Content>
+      </main>
       <FloatingScrollButton />
     </>
   );

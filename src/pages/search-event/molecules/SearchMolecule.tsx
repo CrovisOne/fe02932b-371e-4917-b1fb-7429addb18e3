@@ -14,7 +14,7 @@ export const SearchMolecule = forwardRef<HTMLInputElement, SearchMoleculeProps>(
     ref: ForwardedRef<HTMLInputElement>,
   ): JSX.Element => {
     return (
-      <div className="flex max-w-lg items-center gap-2">
+      <div className="search">
         <Button variant={"ghost"} size={"icon"} onClick={handleSearchClick}>
           <SearchIcon />
         </Button>

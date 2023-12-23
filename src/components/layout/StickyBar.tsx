@@ -3,12 +3,16 @@ import "./StickyBar.scss";
 
 interface StickyBarProps {
   children: ReactNode;
+  className?: string;
 }
 
-export function StickyBar({ children }: StickyBarProps): JSX.Element {
+export function StickyBar({
+  children,
+  className,
+}: StickyBarProps): JSX.Element {
   return (
-    <div className="bar top-16 bg-white/60 px-4 py-2 backdrop-blur-xl">
-      <p className="text">{children}</p>
+    <div className={`bar backdrop-blur-xl ${className ?? ""}`}>
+      <div className="content">{children}</div>
     </div>
   );
 }

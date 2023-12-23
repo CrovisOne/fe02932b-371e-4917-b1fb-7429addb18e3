@@ -14,11 +14,19 @@ export function Navbar(): JSX.Element {
   return (
     <nav
       id="navbar"
-      className="bg-background-dark fixed top-0 z-50 h-16 w-full shadow-md"
+      className="fixed top-0 z-50 h-16 w-full bg-background-dark shadow-md"
     >
       <div className="content mx-auto flex h-full max-w-screen-xl items-center justify-between px-4 py-2">
         <div className="flex h-full items-center gap-[8vw]">
-          <Button variant="default">BRAND</Button>
+          <Button
+            id="logo-button"
+            variant="default"
+            onClick={() => {
+              navigate(appRoutes.searchEvents);
+            }}
+          >
+            BRAND
+          </Button>
           <ol className="nav-items flex items-center gap-8 text-white">
             <li className="flex items-center justify-center">
               <NavLink to={appRoutes.searchEvents}>Events</NavLink>

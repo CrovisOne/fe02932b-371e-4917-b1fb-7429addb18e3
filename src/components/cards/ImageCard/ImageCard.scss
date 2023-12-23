@@ -8,10 +8,29 @@
 
   background-color: white;
 
-  .image-card-image {
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-    object-position: top;
+  .image-wrapper {
+    position: relative;
+
+    .image-card-image {
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      object-position: top;
+    }
+
+    .image-badge {
+      position: absolute;
+      top: 1rem;
+      right: 0rem;
+      padding: 0.2rem;
+      display: flex;
+      justify-content: center;
+      min-width: 4rem;
+
+      border-top-left-radius: 0.2rem;
+      border-bottom-left-radius: 0.2rem;
+
+      background-color: rgba(43, 42, 42, 0.6);
+    }
   }
 
   .image-card-body {
@@ -45,10 +64,7 @@
         background-color: white;
 
         .popover-content {
-          display: flex;
-          gap: 1.5rem;
           margin-top: 0.5rem;
-
           font-size: small;
         }
       }
@@ -60,17 +76,13 @@
       font-weight: 500;
 
       color: hsl(var(--neutral-text));
-
-      a {
-        color: hsl(var(--accent-2));
-        text-decoration-line: underline;
-      }
     }
   }
 
   .image-card-footer {
     display: flex;
-    gap: 0.5rem;
+    align-items: center;
+    gap: 1rem;
     margin: 0rem 1rem 1rem 1rem;
 
     &.align-left {

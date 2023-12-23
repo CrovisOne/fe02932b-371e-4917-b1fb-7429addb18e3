@@ -1,11 +1,19 @@
 import { ReactNode } from "react";
 
+import "./Content.scss";
+
 interface ContentProps {
   children: ReactNode;
+  navSpace?: boolean;
 }
 
-export function Content({ children }: ContentProps): JSX.Element {
+export function Content({
+  navSpace = false,
+  children,
+}: ContentProps): JSX.Element {
   return (
-    <div className="mx-auto mt-16 h-full max-w-screen-xl px-4">{children}</div>
+    <div className={`c-wrapper ${navSpace ? "with-nav-space" : ""}`}>
+      {children}
+    </div>
   );
 }

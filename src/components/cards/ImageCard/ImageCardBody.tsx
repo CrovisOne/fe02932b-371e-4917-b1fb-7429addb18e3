@@ -1,11 +1,11 @@
 import { ReactNode } from "react";
 import { useImageCardContext } from "./ImageCardContext";
 import { CalendarIcon, InfoIcon, MapPinIcon } from "lucide-react";
-import { cleanedDate } from "./scripts/handleDate";
 import { Popover } from "@/components/ui/popover";
 import { PopoverContent, PopoverTrigger } from "@radix-ui/react-popover";
 import { Button } from "@/components/ui/button";
-import { getTime, trimTimeFromDate } from "@/utils/dateHandler";
+import { cleanedDate } from "@/utils/dateHandler";
+import { MoreDetailsContent } from "@/utils/MoreDetailsDate";
 
 interface ImageCardBodyProps {
   title?: string;
@@ -36,7 +36,13 @@ export function ImageCardBody({
         <p>{cleanedStartAndEnd}</p>
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant={"ghost"} size={"sm"}>
+            <Button
+              variant={"ghost"}
+              size={"sm"}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
               <InfoIcon />
             </Button>
           </PopoverTrigger>
@@ -50,41 +56,17 @@ export function ImageCardBody({
       </div>
       <div className="location-info">
         <MapPinIcon />
-        <a href={locationUrl} target="_blank">
+        <a
+          className="a-link"
+          href={locationUrl}
+          target="_blank"
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
           {locationName}
         </a>
       </div>
     </div>
-  );
-}
-
-interface MoreDetailsContentProps {
-  start?: string;
-  end?: string;
-}
-
-function MoreDetailsContent({
-  start,
-  end,
-}: MoreDetailsContentProps): JSX.Element {
-  const startDate = start ? trimTimeFromDate(start) : "";
-  const startTime = start ? getTime(start) : "";
-
-  const endDate = end ? trimTimeFromDate(end) : "";
-  const endTime = end ? getTime(end) : "";
-
-  return (
-    <>
-      <div className="start-date">
-        <p>Start</p>
-        <p>{startDate}</p>
-        <p>{startTime}</p>
-      </div>
-      <div className="end-date">
-        <p>End</p>
-        <p>{endDate}</p>
-        <p>{endTime}</p>
-      </div>
-    </>
   );
 }

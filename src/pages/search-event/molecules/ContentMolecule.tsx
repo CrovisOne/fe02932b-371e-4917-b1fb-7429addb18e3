@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { EventProps } from "@/types/events";
 import { InfoIcon, PlusIcon } from "lucide-react";
 import { RefObject } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface ContentMoleculeProps {
   events: EventProps[];
@@ -21,9 +22,31 @@ export function ContentMolecule({
   error,
   cardRefs,
 }: ContentMoleculeProps): JSX.Element {
+  const navigate = useNavigate();
+
+  const handleImageCardClick = (url: string): void => {
+    navigate(url);
+  };
+
   const renderCard = (item: EventProps, index: number) => (
-    <ImageCard id={item._id} ref={cardRefs[index]} data-date={item.date}>
-      <ImageCard.Image imageUrl={undefined} />
+    <ImageCard
+      id={item._id}
+      ref={cardRefs[index]}
+      key={index}
+      data-date={item.date}
+      className="img-card transition-transform hover:scale-105"
+      tabIndex={0}
+      onKeyDown={(e: any) => {
+        if (e.key === "Enter") handleImageCardClick(item.contentUrl);
+      }}
+      onClick={() => {
+        handleImageCardClick(item.contentUrl);
+      }}
+    >
+      <ImageCard.Image
+        imageUrl={item.flyerFront ?? undefined}
+        badge={item.venue.live ? <p className="img-badge">Live</p> : undefined}
+      />
       <ImageCard.Body
         title={item.title}
         locationUrl={item.venue.direction}
@@ -32,9 +55,11 @@ export function ContentMolecule({
         endTime={item.endTime}
       />
       <ImageCard.Footer align="right">
+        <p className="price">00,00 £</p>
         <Button
           size={"icon"}
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             addToCart(item);
           }}
         >
@@ -63,8 +88,8 @@ export function ContentMolecule({
           <LazyLoader
             items={events}
             renderRow={renderCard}
-            initialCount={10}
-            increment={10}
+            initialCount={18}
+            increment={18}
           />
         </Grid>
       ) : null}

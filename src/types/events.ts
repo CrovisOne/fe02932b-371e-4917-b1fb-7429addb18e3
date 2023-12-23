@@ -29,7 +29,7 @@ interface PickProps {
   blurb: string;
 }
 
-interface ArtistProps {
+export interface ArtistProps {
   id: string;
   name: string;
   _id: {

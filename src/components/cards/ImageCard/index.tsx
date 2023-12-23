@@ -9,17 +9,22 @@ import "./ImageCard.scss";
 export interface ImageCardProps {
   id: string | number;
   children?: ReactNode;
+  className?: string;
   [prop: string]: any;
 }
 
 const ForwardedImageCard = forwardRef<HTMLDivElement, ImageCardProps>(
   (
-    { id, children, ...props },
+    { id, children, className, ...props },
     ref: ForwardedRef<HTMLDivElement>,
   ): JSX.Element => {
     return (
       <ImageCardContext.Provider value={{ id }}>
-        <div ref={ref} {...props} className="image-card shadow-md">
+        <div
+          ref={ref}
+          {...props}
+          className={`image-card shadow-md ${className ?? ""}`}
+        >
           {children}
         </div>
       </ImageCardContext.Provider>
