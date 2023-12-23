@@ -8,8 +8,8 @@ export enum BASE_ROUTES {
 export const appRoutes = {
   home: BASE_ROUTES.Home,
   searchEvents: BASE_ROUTES.Events,
-  event: `${BASE_ROUTES.Events}/{id}`,
+  event: `${BASE_ROUTES.Events}/:id`,
   searchLocation: `${BASE_ROUTES.Locations}`,
-  location: `${BASE_ROUTES.Locations}/{id}`,
+  location: `${BASE_ROUTES.Locations}/:id`,
   cart: BASE_ROUTES.Cart,
 };
