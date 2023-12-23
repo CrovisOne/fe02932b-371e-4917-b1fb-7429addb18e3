@@ -2,6 +2,12 @@ import { ImageCard } from "@/components/cards/ImageCard";
 import { Grid, LazyLoader } from "@/components/layout";
 import { NotePlaceholder } from "@/components/placeholder/NotePlaceholder";
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { EventProps } from "@/types/events";
 import { InfoIcon, PlusIcon } from "lucide-react";
 import { RefObject } from "react";
@@ -56,15 +62,22 @@ export function ContentMolecule({
       />
       <ImageCard.Footer align="right">
         <p className="price">00,00 £</p>
-        <Button
-          size={"icon"}
-          onClick={(e) => {
-            e.stopPropagation();
-            addToCart(item);
-          }}
-        >
-          <PlusIcon className="h-5" />
-        </Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <Button
+                size={"icon"}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  addToCart(item);
+                }}
+              >
+                <PlusIcon className="h-5" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent align="end">Add to Cart</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </ImageCard.Footer>
     </ImageCard>
   );

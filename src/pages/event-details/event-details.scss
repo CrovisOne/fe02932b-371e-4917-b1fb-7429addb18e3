@@ -128,3 +128,20 @@ $content-width: 36rem;
     }
   }
 }
+
+.popover-box {
+  border: 1px solid hsl(var(--neutral-border));
+  margin: 0.2rem;
+  padding: 0.5rem;
+  border-radius: calc(var(--radius) - 4px);
+  width: fit-content !important;
+
+  font-weight: 500;
+  color: hsl(var(--neutral-text)) !important;
+  background-color: white;
+
+  .popover-content {
+    margin-top: 0.5rem;
+    font-size: small;
+  }
+}

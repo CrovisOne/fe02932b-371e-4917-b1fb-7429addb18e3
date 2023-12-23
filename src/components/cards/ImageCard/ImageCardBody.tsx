@@ -6,6 +6,12 @@ import { PopoverContent, PopoverTrigger } from "@radix-ui/react-popover";
 import { Button } from "@/components/ui/button";
 import { cleanedDate } from "@/utils/dateHandler";
 import { MoreDetailsContent } from "@/utils/MoreDetailsDate";
+import {
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Tooltip } from "@radix-ui/react-tooltip";
 
 interface ImageCardBodyProps {
   title?: string;
@@ -30,7 +36,17 @@ export function ImageCardBody({
 
   return (
     <div id={`image-card-body-${id}`} className="image-card-body">
-      <h4 className="title">{title}</h4>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <h4 className="card-title">{title}</h4>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p className="max-w-xs">{title}</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+
       <div className="date-info">
         <CalendarIcon />
         <p>{cleanedStartAndEnd}</p>
@@ -39,6 +55,11 @@ export function ImageCardBody({
             <Button
               variant={"ghost"}
               size={"sm"}
+              onKeyDown={(e: any) => {
+                if (e.key === "Enter") {
+                  e.stopPropagation();
+                }
+              }}
               onClick={(e) => {
                 e.stopPropagation();
               }}
@@ -60,6 +81,11 @@ export function ImageCardBody({
           className="a-link"
           href={locationUrl}
           target="_blank"
+          onKeyDown={(e: any) => {
+            if (e.key === "Enter") {
+              e.stopPropagation();
+            }
+          }}
           onClick={(e) => {
             e.stopPropagation();
           }}

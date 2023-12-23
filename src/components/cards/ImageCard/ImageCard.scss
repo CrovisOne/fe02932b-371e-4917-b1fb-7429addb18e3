@@ -40,8 +40,9 @@
     margin: 1rem;
     flex-grow: 1;
 
-    .title {
+    .card-title {
       overflow: hidden;
+      text-align: start;
       display: -webkit-box;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 2;
