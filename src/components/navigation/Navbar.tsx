@@ -1,11 +1,11 @@
 import { ShoppingBasketIcon } from "lucide-react";
 import { Button } from "../ui/button";
-
-import "./Navbar.scss";
 import { NavLink, useNavigate } from "react-router-dom";
 import { appRoutes } from "@/routes/appRoutes";
 import { useContext } from "react";
 import { CartContext } from "@/provider/CartProvider";
+
+import "./Navbar.scss";
 
 export function Navbar(): JSX.Element {
   const navigate = useNavigate();

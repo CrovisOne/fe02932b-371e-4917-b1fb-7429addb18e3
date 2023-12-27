@@ -19,7 +19,10 @@ export function SummaryCards({ events }: SummaryCardsProps): JSX.Element {
     <>
       {events.map((event, index) => (
         <SummaryCard>
-          <SummaryCard.Image imageUrl={undefined} />
+          <SummaryCard.Image
+            imageUrl={undefined}
+            className="hidden md:block "
+          />
           <SummaryCard.Body
             title={event.title}
             description={<Description event={event} />}

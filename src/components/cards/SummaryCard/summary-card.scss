@@ -1,0 +1,51 @@
+.summary-card {
+  display: flex;
+  height: fit-content;
+  background-color: white;
+  padding: 1rem;
+
+  .summary-card-image {
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    max-height: 6rem;
+
+    border-radius: calc(var(--radius) - 4px);
+  }
+
+  .summary-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    width: 100%;
+    margin: 0rem 1rem;
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+
+      .title {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+
+        overflow: hidden;
+        font-size: large;
+        font-weight: 600;
+      }
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+
+      .bottom-utils {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+    }
+  }
+}

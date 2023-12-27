@@ -1,13 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Title } from "@radix-ui/react-toast";
-import {
-  CalendarIcon,
-  MapPinIcon,
-  MinusIcon,
-  PlusIcon,
-  Trash2Icon,
-} from "lucide-react";
 import { ReactNode } from "react";
 
 interface SummaryCardBodyProps {
@@ -30,16 +20,14 @@ export function SummaryCardBody({
       {children ? (
         children
       ) : (
-        <div className="mx-4 flex w-full flex-col gap-1">
-          <div className="flex justify-between gap-2">
-            <p className="line-clamp-1 overflow-hidden text-lg font-semibold">
-              {title}
-            </p>
+        <div className="summary-card-body">
+          <div className="header flex">
+            <p className="title">{title}</p>
             {topUtils}
           </div>
-          <div className="flex items-center justify-between">
+          <div className="footer flex-col md:flex-row ">
             <div>{description}</div>
-            <div className="flex items-center gap-4">{bottomUtils}</div>
+            <div className="bottom-utils">{bottomUtils}</div>
           </div>
         </div>
       )}

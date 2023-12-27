@@ -26,6 +26,7 @@ const filterEvents = (events: EventProps[], query: string) => {
  * @returns Sorted event list
  */
 const sortEvents = (events: EventProps[]) => {
+  if (events.length === 0) return events;
   return events.sort(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
   );

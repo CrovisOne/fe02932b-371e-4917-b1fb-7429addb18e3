@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { appRoutes } from "@/routes/appRoutes";
 import { ArrowLeftIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -11,7 +10,7 @@ export function TitleBar({ title }: TitleBarProps): JSX.Element {
   const navigate = useNavigate();
 
   const goBack = () => {
-    navigate(appRoutes.searchEvents);
+    navigate(-1);
   };
 
   return (

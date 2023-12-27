@@ -84,7 +84,12 @@ export function ContentMolecule({
 
   return (
     <>
-      {loading ? <NotePlaceholder>Please wait a moment</NotePlaceholder> : null}
+      {loading ? (
+        <NotePlaceholder>
+          <div className="h-3 w-3 animate-ping rounded-full bg-slate-500" />
+          Please wait a moment
+        </NotePlaceholder>
+      ) : null}
       {!loading && error ? (
         <NotePlaceholder>
           {"Sorry, I couldn't find any events :("}

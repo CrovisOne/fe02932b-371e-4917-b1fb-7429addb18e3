@@ -30,6 +30,7 @@ import { UseAxiosProps, useAxios } from "@/hooks/useAxios";
 import { getEventsApiRoute } from "@/routes/apiRoutes";
 
 import "./search-location.scss";
+import { FloatingScrollButton } from "@/components/floating/FloatingScrollButton";
 
 export function SearchLocationsPage(): JSX.Element {
   const { toast } = useToast();
@@ -130,6 +131,7 @@ export function SearchLocationsPage(): JSX.Element {
           <UpcomingEventsMolcule events={sortedEvents} addToCart={addToCart} />
         </Content>
       </main>
+      <FloatingScrollButton />
     </>
   );
 }

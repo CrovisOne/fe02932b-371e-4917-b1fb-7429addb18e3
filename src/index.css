@@ -143,4 +143,5 @@ h4 {
 .a-link {
   color: hsl(var(--accent-2));
   text-decoration: underline;
+  cursor: pointer;
 }
