@@ -1,4 +1,3 @@
-import DummyData from "../../assets/dummy.json";
 import { Content } from "@/components/layout";
 import {
   ChangeEvent,
@@ -19,7 +18,7 @@ import { debounce } from "@/utils/debouncer";
 import { getDateRange } from "./scripts/eventDateRange";
 import { useToast } from "@/components/ui/use-toast";
 import { FloatingScrollButton } from "@/components/floating/FloatingScrollButton";
-import { useAxios } from "@/hooks/useAxios";
+import { UseAxiosProps, useAxios } from "@/hooks/useAxios";
 import { getEventsApiRoute } from "@/routes/apiRoutes";
 import {
   BadgeMolecule,
@@ -32,24 +31,26 @@ import "./search-events.scss";
 
 export function SearchEventPage(): JSX.Element {
   const { toast } = useToast();
+  const { events, setEvents } = useContext(EventListContext);
+  const { addCartItem, cartContent } = useContext(CartContext);
+  const [currentDate, setCurrentDate] = useState<string | null>(null);
+  const [filteredEvents, setFilteredEvents] = useState<EventProps[]>(events);
+  const [cardRefs, setCardRefs] = useState<
+    (RefObject<HTMLDivElement> | null)[]
+  >([]);
+
+  const axiosProps: UseAxiosProps = {
+    url: getEventsApiRoute(),
+    method: "get",
+  };
   const {
     callAxios: fetchEvents,
     data: eventData,
     loading,
     error,
-  } = useAxios<EventProps[]>({
-    url: getEventsApiRoute(),
-    method: "get",
-  });
-  const { events, setEvents } = useContext(EventListContext);
-  const { addCartItem, cartContent } = useContext(CartContext);
-  const [currentDate, setCurrentDate] = useState<string | null>(null);
-  const [filteredEvents, setFilteredEvents] = useState<EventProps[]>([]);
-  const [cardRefs, setCardRefs] = useState<
-    (RefObject<HTMLDivElement> | null)[]
-  >([]);
+  } = useAxios<EventProps[]>(axiosProps);
 
-  const fetchedData = useRef(false);
+  const fetchedData = useRef(false); // To make sure, that data gets fetched only once
   const searchRef = useRef<HTMLInputElement>(null);
 
   const sortedEvents = sortEvents(filteredEvents).filter(
@@ -82,7 +83,7 @@ export function SearchEventPage(): JSX.Element {
 
   const dateRange = getDateRange(events);
 
-  // Add current visible date observer
+  // Mount cards observer for current date
   useEffect(() => {
     const observeElements = cardRefs
       .map((ref) => ref?.current)
@@ -92,26 +93,26 @@ export function SearchEventPage(): JSX.Element {
     return cleanup;
   });
 
-  // Add eventDate to context API
+  // Add eventData to Context API
   useEffect(() => {
-    setEvents(DummyData);
-    setFilteredEvents(DummyData);
     if (eventData === null) return;
+    if (error !== null) return;
     setEvents(eventData);
     setFilteredEvents(eventData);
   }, [eventData]);
 
-  // Refresh eventCardsRef for date observer
+  // Refresh eventCardsRef for date observer if events Array changes
   useEffect(() => {
     setCardRefs(events.map(() => createRef<HTMLDivElement>()));
   }, [events]);
 
-  // Fetch data
-  // useLayoutEffect(() => {
-  //   if (fetchedData.current) return;
-  //   fetchEvents();
-  //   fetchedData.current = true;
-  // }, []);
+  // Fetch event data
+  useLayoutEffect(() => {
+    if (fetchedData.current) return;
+    if (events.length > 0) return;
+    fetchEvents();
+    fetchedData.current = true;
+  }, []);
 
   return (
     <>
