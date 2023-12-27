@@ -16,7 +16,7 @@ export interface EventProps {
   __v: number;
 }
 
-interface VenueProps {
+export interface VenueProps {
   id: string;
   name: string;
   contentUrl: string | null;

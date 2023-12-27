@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-interface UseAxiosProps {
+export interface UseAxiosProps {
   url: string;
   method: "get" | "put" | "post" | "delete";
   params?: AxiosRequestConfig;
