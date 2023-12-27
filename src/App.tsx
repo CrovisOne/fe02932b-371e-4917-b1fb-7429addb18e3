@@ -6,6 +6,7 @@ import { Navbar } from "./components/navigation/Navbar";
 import { CartSummaryPage } from "./pages/cart-summary";
 import { Toaster } from "./components/ui/toaster";
 import { EventDetails } from "./pages/event-details";
+import { SearchLocationsPage } from "./pages/search-location";
 
 function App(): JSX.Element {
   return (
@@ -17,10 +18,13 @@ function App(): JSX.Element {
           element={<Navigate to={appRoutes.searchEvents} />}
         />
         <Route path={appRoutes.searchEvents} element={<SearchEventPage />} />
-        <Route path={appRoutes.searchLocation} element={<>Search Location</>} />
+        <Route
+          path={appRoutes.searchLocation}
+          element={<SearchLocationsPage />}
+        />
         <Route path={appRoutes.cart} element={<CartSummaryPage />} />
         <Route path={appRoutes.event} element={<EventDetails />} />
-        <Route path={appRoutes.location} element={<>location</>} />
+        <Route path={appRoutes.location} element={<SearchLocationsPage />} />
       </Routes>
       <Toaster />
     </>
