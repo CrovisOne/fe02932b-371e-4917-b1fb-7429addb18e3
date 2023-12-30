@@ -1,10 +1,42 @@
 #navbar {
+  position: fixed;
+  top: 0;
+  z-index: 50;
+  height: 4rem;
+  width: 100%;
+  background-color: hsl(var(--background-dark));
+
+  .content {
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    max-width: 1280px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0rem 0.5rem;
+    height: 100%;
+
+    .left-side {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      gap: 8vw;
+    }
+  }
+
   ol {
-    color: gray;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+    color: hsl(var(--slate-400));
     font-weight: 400;
     height: 100%;
 
     li {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       height: inherit;
     }
 
@@ -13,6 +45,27 @@
         color: white;
         border-bottom: 2px solid white;
       }
+    }
+  }
+
+  .cart-button {
+    position: relative;
+
+    .cart-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      right: 0;
+      top: 0;
+
+      border-radius: 25%;
+      background-color: hsl(var(--primary));
+      padding: 0rem 0.375rem;
+      font-size: 0.75rem;
+      line-height: 1rem;
+      font-weight: 500;
+      color: white;
     }
   }
 
