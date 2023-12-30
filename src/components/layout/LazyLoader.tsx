@@ -5,6 +5,7 @@ interface LazyLoaderProps {
   renderRow: (item: any, index: number) => ReactNode;
   initialCount: number;
   increment: number;
+  updateElementRefs?: (newCount: number) => void;
 }
 
 export function LazyLoader({
@@ -12,6 +13,7 @@ export function LazyLoader({
   renderRow,
   initialCount,
   increment,
+  updateElementRefs,
 }: LazyLoaderProps): JSX.Element {
   const [visibleCount, setVisibleCount] = useState(initialCount);
 
@@ -23,7 +25,12 @@ export function LazyLoader({
       const reached = scrollPosition >= totalHeight * 0.8;
 
       if (reached) {
-        setVisibleCount((prev) => prev + increment);
+        setVisibleCount((prev) => {
+          const newCount = prev + increment;
+          if (updateElementRefs) updateElementRefs(newCount);
+
+          return newCount;
+        });
       }
     };
 

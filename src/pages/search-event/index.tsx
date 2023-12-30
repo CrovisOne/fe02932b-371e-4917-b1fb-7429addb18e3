@@ -83,6 +83,12 @@ export function SearchEventPage(): JSX.Element {
 
   const dateRange = getDateRange(events);
 
+  const updateCardRefs = (newCount: number) => {
+    setCardRefs(
+      events.slice(0, newCount).map(() => createRef<HTMLDivElement>()),
+    );
+  };
+
   // Mount cards observer for current date
   useEffect(() => {
     const observeElements = cardRefs
@@ -91,7 +97,7 @@ export function SearchEventPage(): JSX.Element {
 
     const cleanup = observeCards(observeElements, setCurrentDate);
     return cleanup;
-  });
+  }, [cardRefs]);
 
   // Add eventData to Context API
   useEffect(() => {
@@ -141,6 +147,7 @@ export function SearchEventPage(): JSX.Element {
             cardRefs={cleanedCardRefs}
             loading={loading}
             error={error}
+            updateCardRefs={updateCardRefs}
           />
         </Content>
       </main>

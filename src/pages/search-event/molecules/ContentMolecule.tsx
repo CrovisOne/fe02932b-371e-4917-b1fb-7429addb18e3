@@ -19,6 +19,7 @@ interface ContentMoleculeProps {
   loading: boolean;
   error: string | null;
   cardRefs: RefObject<HTMLDivElement>[];
+  updateCardRefs: (count: number) => void;
 }
 
 export function ContentMolecule({
@@ -27,6 +28,7 @@ export function ContentMolecule({
   loading,
   error,
   cardRefs,
+  updateCardRefs,
 }: ContentMoleculeProps): JSX.Element {
   const navigate = useNavigate();
 
@@ -60,24 +62,27 @@ export function ContentMolecule({
         startTime={item.startTime ?? item.date}
         endTime={item.endTime}
       />
-      <ImageCard.Footer align="right">
-        <p className="price">00,00 £</p>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger>
-              <Button
-                size={"icon"}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  addToCart(item);
-                }}
-              >
-                <PlusIcon className="h-5" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent align="end">Add to Cart</TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+      <ImageCard.Footer align="between">
+        <p className="attending">Attending: {item.attending ?? 0}</p>
+        <div className="call-to-action">
+          <p className="price">00,00 £</p>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Button
+                  size={"icon"}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    addToCart(item);
+                  }}
+                >
+                  <PlusIcon className="h-5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent align="end">Add to Cart</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
       </ImageCard.Footer>
     </ImageCard>
   );
@@ -108,6 +113,7 @@ export function ContentMolecule({
             renderRow={renderCard}
             initialCount={18}
             increment={18}
+            updateElementRefs={updateCardRefs}
           />
         </Grid>
       ) : null}
