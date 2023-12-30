@@ -51,14 +51,26 @@
     cursor: pointer;
     margin-left: auto;
     margin-right: auto;
-  }
 
-  .img-badge {
-    color: white;
-  }
+    .img-badge {
+      color: white;
+    }
 
-  .price {
-    font-size: large;
-    font-weight: 500;
+    .attending {
+      font-size: small;
+      font-weight: 500;
+      color: hsl(var(--neutral-text));
+    }
+
+    .call-to-action {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .price {
+        font-size: large;
+        font-weight: 500;
+      }
+    }
   }
 }

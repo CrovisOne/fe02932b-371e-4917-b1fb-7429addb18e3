@@ -9,15 +9,20 @@ $content-width: 36rem;
     object-fit: cover;
   }
 
-  .badge {
+  .badge-box {
+    display: flex;
+    gap: 0.5rem;
     position: absolute;
     bottom: 0.5rem;
     right: 0.5rem;
-    border-radius: calc(var(--radius) - 2px);
-    padding: 0.5rem 1rem;
 
-    color: white;
-    background-color: rgba(43, 42, 42, 0.6);
+    .badge {
+      border-radius: calc(var(--radius) - 2px);
+      padding: 0.5rem 1rem;
+
+      color: white;
+      background-color: rgba(43, 42, 42, 0.6);
+    }
   }
 }
 

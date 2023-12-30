@@ -29,7 +29,14 @@ export function EventDetails(): JSX.Element {
               (e.target as HTMLImageElement).src = PlaceholderImage;
             }}
           />
-          <div className="badge backdrop-blur-md">Live</div>
+          <div className="badge-box">
+            <div className="badge backdrop-blur-md">
+              {currentEvent?.attending ?? 0} Attending
+            </div>
+            {currentEvent?.venue.live ? (
+              <div className="badge backdrop-blur-md">Live</div>
+            ) : null}
+          </div>
         </div>
         <main className="event-details-main-content">
           <TitleBar title={currentEvent?.title ?? ""} />
