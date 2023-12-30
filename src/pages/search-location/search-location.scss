@@ -1,0 +1,66 @@
+.search-location-main-content {
+  padding-bottom: 5rem;
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 1rem;
+
+    h3 {
+      margin: 1rem 0rem;
+    }
+
+    .tools {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      justify-content: space-between;
+
+      .badges {
+        display: flex;
+        gap: 1rem;
+
+        .badge {
+          display: flex;
+          gap: 0.5rem;
+          padding: 0.5rem 0.5rem;
+
+          img {
+            aspect-ratio: 1 / 1;
+            height: 1.5rem;
+            overflow: hidden;
+            border-radius: 100%;
+          }
+        }
+      }
+
+      .search {
+        display: flex;
+        max-width: 32rem;
+        align-items: center;
+        gap: 0.5rem;
+      }
+    }
+  }
+
+  .locations {
+    margin: 1rem 0rem;
+    padding: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+
+    background-color: hsl(var(--accent));
+  }
+
+  .events-header {
+    margin: 1.5rem 0rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-top: 1rem;
+
+    font-weight: 500;
+  }
+}

@@ -1,0 +1,70 @@
+.tiny-card {
+  border-color: transparent;
+  max-height: 16rem;
+  min-height: 12rem;
+  min-width: 12rem;
+  max-width: 16rem;
+  overflow: hidden;
+
+  border-radius: calc(var(--radius) - 2px);
+  border-width: 2px;
+  background-color: white;
+  cursor: pointer;
+
+  &:hover,
+  &.focused {
+    border-color: hsl(var(--accent-dark));
+  }
+
+  .img-wrapper {
+    position: relative;
+
+    img {
+      z-index: 2;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+    }
+
+    .title {
+      z-index: 3;
+      position: absolute;
+      left: 0.5rem;
+      bottom: 0.5rem;
+      font-weight: 600;
+      color: white;
+    }
+  }
+
+  .img-wrapper::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80%;
+    background: linear-gradient(
+      0deg,
+      rgba(15, 1, 24, 0.908000700280112) 0%,
+      rgba(247, 37, 133, 0) 100%
+    );
+    z-index: 1;
+  }
+
+  .tiny-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem;
+
+    font-size: small;
+    font-weight: 500;
+
+    .direction,
+    .event-count {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: hsl(var(--neutral-text));
+    }
+  }
+}

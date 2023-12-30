@@ -1,0 +1,11 @@
+.c-wrapper {
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
+  max-width: 1280px;
+  padding: 0rem 1rem;
+
+  &.with-nav-space {
+    margin-top: 4rem;
+  }
+}

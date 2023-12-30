@@ -1,0 +1,13 @@
+.note-placeholder {
+  background-color: hsl(var(--neutral));
+  border: 2px solid hsl(var(--neutral-border));
+  border-radius: calc(var(--radius) - 2px);
+  padding: 0.5rem 1rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+
+  color: hsl(var(--neutral-text));
+}

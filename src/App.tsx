@@ -1,33 +1,32 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
+import { BASE_ROUTES, appRoutes } from "./routes/appRoutes";
+import { SearchEventPage } from "./pages/search-event";
+import { Navbar } from "./components/navigation/Navbar";
+import { CartSummaryPage } from "./pages/cart-summary";
+import { Toaster } from "./components/ui/toaster";
+import { EventDetails } from "./pages/event-details";
+import { SearchLocationsPage } from "./pages/search-location";
 
-function App() {
-  const [count, setCount] = useState(0);
-
+function App(): JSX.Element {
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Navbar />
+      <Routes>
+        <Route
+          path={BASE_ROUTES.Home}
+          element={<Navigate to={appRoutes.searchEvents} />}
+        />
+        <Route path={appRoutes.searchEvents} element={<SearchEventPage />} />
+        <Route
+          path={appRoutes.searchLocation}
+          element={<SearchLocationsPage />}
+        />
+        <Route path={appRoutes.cart} element={<CartSummaryPage />} />
+        <Route path={appRoutes.event} element={<EventDetails />} />
+        <Route path={appRoutes.location} element={<SearchLocationsPage />} />
+      </Routes>
+      <Toaster />
     </>
   );
 }
