@@ -2,7 +2,6 @@
   display: flex;
   height: fit-content;
   background-color: white;
-  padding: 1rem;
 
   .summary-card-image {
     aspect-ratio: 1 / 1;
@@ -17,7 +16,6 @@
     flex-direction: column;
     gap: 0.25rem;
     width: 100%;
-    margin: 0rem 1rem;
 
     .header {
       display: flex;
@@ -30,6 +28,7 @@
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 1;
 
+        line-height: 2;
         overflow: hidden;
         font-size: large;
         font-weight: 600;

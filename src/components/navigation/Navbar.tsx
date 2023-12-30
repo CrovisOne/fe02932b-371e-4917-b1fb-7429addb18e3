@@ -12,12 +12,9 @@ export function Navbar(): JSX.Element {
   const { cartContent } = useContext(CartContext);
 
   return (
-    <nav
-      id="navbar"
-      className="fixed top-0 z-50 h-16 w-full bg-background-dark shadow-md"
-    >
-      <div className="content mx-auto flex h-full max-w-screen-xl items-center justify-between px-4 py-2">
-        <div className="flex h-full items-center gap-[8vw]">
+    <nav id="navbar" className="shadow-md">
+      <div className="content">
+        <div className="left-side">
           <Button
             id="logo-button"
             variant="default"
@@ -25,13 +22,13 @@ export function Navbar(): JSX.Element {
               navigate(appRoutes.searchEvents);
             }}
           >
-            BRAND
+            EVENTS
           </Button>
-          <ol className="nav-items flex items-center gap-8 text-white">
-            <li className="flex items-center justify-center">
+          <ol>
+            <li>
               <NavLink to={appRoutes.searchEvents}>Events</NavLink>
             </li>
-            <li className="flex items-center justify-center">
+            <li>
               <NavLink to={appRoutes.searchLocation}>Locations</NavLink>
             </li>
           </ol>
@@ -42,13 +39,11 @@ export function Navbar(): JSX.Element {
           onClick={() => {
             navigate(appRoutes.cart);
           }}
-          className="relative"
+          className="cart-button"
         >
           <ShoppingBasketIcon className="text-white" />
           {cartContent.length ? (
-            <div className="absolute right-0 top-0 flex items-center rounded-full bg-primary px-1.5 text-xs font-medium text-white">
-              {cartContent.length}
-            </div>
+            <div className="cart-badge">{cartContent.length}</div>
           ) : null}
         </Button>
       </div>

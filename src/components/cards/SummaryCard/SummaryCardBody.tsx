@@ -20,7 +20,7 @@ export function SummaryCardBody({
       {children ? (
         children
       ) : (
-        <div className="summary-card-body">
+        <div className="summary-card-body mx-0 md:mx-4">
           <div className="header flex">
             <p className="title">{title}</p>
             {topUtils}
