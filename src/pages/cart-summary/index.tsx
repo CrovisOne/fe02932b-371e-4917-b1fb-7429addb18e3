@@ -3,13 +3,13 @@ import { CartContext } from "@/provider/CartProvider";
 import { useContext } from "react";
 import { SummaryCards } from "./molecules/SummaryCards";
 import { SubTotal } from "./molecules/SubTotal";
-
-import "./cart-summary.scss";
 import { NotePlaceholder } from "@/components/placeholder/NotePlaceholder";
 import { SearchIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { appRoutes } from "@/routes/appRoutes";
+
+import "./cart-summary.scss";
 
 export function CartSummaryPage(): JSX.Element {
   const { cartContent, removeCartItem } = useContext(CartContext);

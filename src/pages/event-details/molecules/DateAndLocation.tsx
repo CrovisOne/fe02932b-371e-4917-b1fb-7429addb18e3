@@ -5,7 +5,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { MoreDetailsContent } from "@/utils/MoreDetailsDate";
-import { cleanedDate, getTime, trimTimeFromDate } from "@/utils/dateHandler";
+import { cleanedDate } from "@/utils/dateHandler";
 import { CalendarIcon, InfoIcon, MapPinIcon } from "lucide-react";
 
 interface DateAndLocationProps {

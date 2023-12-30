@@ -1,5 +1,4 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import "./App.css";
 import { BASE_ROUTES, appRoutes } from "./routes/appRoutes";
 import { SearchEventPage } from "./pages/search-event";
 import { Navbar } from "./components/navigation/Navbar";
@@ -7,6 +6,8 @@ import { CartSummaryPage } from "./pages/cart-summary";
 import { Toaster } from "./components/ui/toaster";
 import { EventDetails } from "./pages/event-details";
 import { SearchLocationsPage } from "./pages/search-location";
+
+import "./App.css";
 
 function App(): JSX.Element {
   return (
