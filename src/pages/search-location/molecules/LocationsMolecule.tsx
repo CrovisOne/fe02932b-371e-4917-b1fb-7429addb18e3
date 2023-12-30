@@ -3,6 +3,8 @@ import { LocationProps } from "../scripts/reduceToUniqueLocations";
 import { TinyCard } from "@/components/cards/TinyCard";
 import { NotePlaceholder } from "@/components/placeholder/NotePlaceholder";
 import { InfoIcon } from "lucide-react";
+import { useRef } from "react";
+import { scrollToCenter } from "../scripts/scrollToCenter";
 
 interface LocationMoleculeProps {
   locations: LocationProps[];
@@ -18,11 +20,14 @@ export function LocationsMolecule({
   error,
 }: LocationMoleculeProps): JSX.Element {
   const navigate = useNavigate();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const tinyCards = locations.map((item) => (
     <div
+      data-id={item.venue.id}
       onClick={() => {
-        navigate(item.venue.contentUrl ?? `clubs/${item.venue.id}`);
+        scrollToCenter(scrollContainerRef.current, item.venue.id);
+        navigate(item.venue.contentUrl ?? `/clubs/${item.venue.id}`);
       }}
     >
       <TinyCard focused={currentLocationId === item.venue.id}>
@@ -66,7 +71,9 @@ export function LocationsMolecule({
 
       {/* If everything is fine */}
       {!loading && !error && locations.length !== 0 ? (
-        <div className="locations">{tinyCards}</div>
+        <div className="locations" ref={scrollContainerRef}>
+          {tinyCards}
+        </div>
       ) : null}
     </>
   );
