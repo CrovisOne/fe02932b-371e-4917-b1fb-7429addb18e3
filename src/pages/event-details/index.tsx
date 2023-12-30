@@ -14,7 +14,7 @@ import {
 import "./event-details.scss";
 
 export function EventDetails(): JSX.Element {
-  const { events, setEvents } = useContext(EventListContext);
+  const { events } = useContext(EventListContext);
   const { id } = useParams();
 
   const currentEvent = events.find((event) => event._id === id);

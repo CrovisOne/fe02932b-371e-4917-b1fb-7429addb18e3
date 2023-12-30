@@ -6,6 +6,12 @@ export type DateRangeReturnType = {
   latest: string;
 };
 
+/**
+ * Takes an array of events and returns the earliest and latest date
+ *
+ * @param events
+ * @returns Object
+ */
 export function getDateRange(events: EventProps[]): DateRangeReturnType {
   if (events.length === 0) return { earliest: "", latest: "" };
 
