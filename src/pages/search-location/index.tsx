@@ -39,7 +39,7 @@ export function SearchLocationsPage(): JSX.Element {
   const { addCartItem, cartContent } = useContext(CartContext);
 
   const reducedEvents = useMemo(() => {
-    return reduceToUniqueLocations(events);
+    return reduceToUniqueLocations(sortEvents(events));
   }, [events]);
   const [reducedLocations, setReducedLocations] =
     useState<LocationProps[]>(reducedEvents);
@@ -62,7 +62,7 @@ export function SearchLocationsPage(): JSX.Element {
   const correspondingEvents =
     filteredLocations.find((location) => location.venue.id === id)?.events ??
     [];
-  const sortedEvents = sortEvents(correspondingEvents).filter(
+  const availableEvents = correspondingEvents.filter(
     (item) => !cartContent.some((cartItem) => cartItem._id === item._id),
   );
 
@@ -128,7 +128,10 @@ export function SearchLocationsPage(): JSX.Element {
             loading={loading}
             error={error}
           />
-          <UpcomingEventsMolcule events={sortedEvents} addToCart={addToCart} />
+          <UpcomingEventsMolcule
+            events={availableEvents}
+            addToCart={addToCart}
+          />
         </Content>
       </main>
       <FloatingScrollButton />
